@@ -29,14 +29,23 @@ export default class Episodes extends Component {
       <div className='ep-list'>
         {
           episodes.map(item => {
-            const { id, name, air_date, episode, characters, url, created } = item;
+            const {
+              id,
+              name,
+              air_date,
+              episode,
+              characters,
+              url,
+              created
+            } = item;
+
             return (
               <div className='ep'>
-                <div>{id}. Name: {name}</div>
-                <div>Air date: {air_date}</div>
-                <div>Episode: {episode}</div>
-                <a href={url}>URL</a>
-                <div>Created: {created}</div>
+                {!!id &&<h1>{id}. {name}</h1>}
+                {!!air_date &&<div>Air date: {air_date}</div>}
+                {!!episode &&<div>Episode: {episode}</div>}
+                {!!url &&<a href={url}>URL</a>}
+                {!!created &&<div>Created: {created}</div>}
               </div>
             )
           })
