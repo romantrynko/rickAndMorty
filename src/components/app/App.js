@@ -15,7 +15,7 @@ import MainPage from '../main-page/MainPage';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <Header />
       <Switch>
         <Route path='/' component={MainPage} exact />

@@ -1,0 +1,4 @@
+.chars {
+  display  : flex;
+  flex-wrap: wrap;
+}

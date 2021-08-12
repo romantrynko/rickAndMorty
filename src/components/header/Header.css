@@ -1,0 +1,12 @@
+.nav {
+  display        : flex;
+  flex-direction : row;
+  justify-content: space-around
+}
+
+.link {
+  color          : rgb(37, 95, 170);
+  text-decoration: none;
+  text-transform : uppercase;
+  font-weight    : bold
+}
