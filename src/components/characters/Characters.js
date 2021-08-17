@@ -25,13 +25,13 @@ export default class Characters extends Component {
 
   nextPage = () => {
      this.setState({
-      page: this.page + 1
+      page: this.state.page + 1
     })
   };
 
   previousPage = () => {
     this.setState({
-      page: this.page - 1
+      page: this.state.page - 1
     })
   };
 
