@@ -1,56 +1,74 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router';
 
 import './Episodes.css';
 
-export default class Episodes extends Component {
+const EpisodesComponent = () => {
+  const [episodes, setEpisodes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  state = {
-    episodes: []
-  };
+  useEffect(() => {
+    const getEpisodes = async () => {
+      setLoading(true);
+      await fetch("https://rickandmortyapi.com/api/episode")
+        .then(response => response.json())
+        .then(data => {
+          const { results } = data;
+          setEpisodes(results);
+          setLoading(false);
+        });
+    };
 
-  async componentDidMount() {
-    await fetch("https://rickandmortyapi.com/api/episode")
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
+    getEpisodes();
+  }, []);
 
-        const { results } = data;
+  return (
+    <div>
+      {
+        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary mb-3'>Episodes</h1>
+      }
+      {
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Air date:</th>
+              <th scope="col">Episode: </th>
+              <th scope="col">URL</th>
+              <th scope="col">Created: </th>
+            </tr>
+          </thead>
+        </table>
+      }
+      {
+        episodes.map(item => {
+          const {
+            id,
+            name,
+            air_date,
+            episode,
+            characters,
+            url,
+            created
+          } = item;
 
-        this.setState({
-          episodes: results
+          return (
+            <table className="table">
+              <tbody>
+                <tr>
+                  {!!id && <th scope="row">{id}. {name}</th>}
+                  {!!air_date && <td>{air_date}</td>}
+                  {!!episode && <td>{episode}</td>}
+                  {!!url && <td href={url}></td>}
+                  {!!created && <td>{created}</td>}
+                </tr>
+              </tbody>
+            </table>
+          )
         })
-      });
-  };
+      }
+    </div>
+  )
+};
 
-  render() {
-    const { episodes } = this.state;
-
-    return (
-      <div className='ep-list'>
-        {
-          episodes.map(item => {
-            const {
-              id,
-              name,
-              air_date,
-              episode,
-              characters,
-              url,
-              created
-            } = item;
-
-            return (
-              <div className='ep'>
-                {!!id &&<h1>{id}. {name}</h1>}
-                {!!air_date &&<div>Air date: {air_date}</div>}
-                {!!episode &&<div>Episode: {episode}</div>}
-                {!!url &&<a href={url}>URL</a>}
-                {!!created &&<div>Created: {created}</div>}
-              </div>
-            )
-          })
-        }
-      </div>
-    )
-  }
-}
+export const Episodes = withRouter(EpisodesComponent);

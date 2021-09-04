@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-
-export default class MyWatchList extends Component {
-  render() {
-    return (
-      <div >
-        <h1>My watchlist</h1>
-      </div>
-    )
-  }
+export const MyWatchList = () => {
+  return (
+    <div >
+      <h1>My watchlist</h1>
+    </div>
+  )
 }

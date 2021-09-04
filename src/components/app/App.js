@@ -6,12 +6,12 @@ import {
   Link,
   Redirect
 } from 'react-router-dom';
-import Characters from '../characters/Characters';
-import Episodes from '../episodes/Episodes';
-import Locations from '../locations/Locations';
-import MyWatchList from '../my-watchlist/MyWatchList';
-import Header from '../header/Header';
-import MainPage from '../main-page/MainPage';
+import { Characters } from '../characters/Characters';
+import { Episodes } from '../episodes/Episodes';
+import { Locations } from '../locations/Locations';
+import { MyWatchList } from '../my-watchlist/MyWatchList';
+import { Header } from '../header/Header';
+import { MainPage } from '../main-page/MainPage';
 
 function App() {
   return (
