@@ -25,10 +25,10 @@ const EpisodesComponent = () => {
   return (
     <div>
       {
-        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary mb-3'>Episodes</h1>
+        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary'>Episodes</h1>
       }
       {
-        <table className="table">
+        <table className="table table-striped table-dark">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -53,7 +53,7 @@ const EpisodesComponent = () => {
           } = item;
 
           return (
-            <table className="table">
+            <table className="table ">
               <tbody>
                 <tr>
                   {!!id && <th scope="row">{id}. {name}</th>}

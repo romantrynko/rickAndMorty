@@ -15,19 +15,21 @@ export const CharacterCard = ({ character: {
   episode,
   url,
   created
-}, loading }) => {
-  
-
+}, loading, openModal, style, modal }) => {
   return ( 
-    <div className='char-card'>
-      {!!id && <h1>{id}. {name}</h1>}
-      {!!image && <img src={image} alt={name} />}
-      {!!species && <h4>Species: {species}</h4>}
-      {!!status && <h4>Status: {status}</h4>}
-      {!!gender && <h4>Gender: {gender}</h4>}
-      {!!type && <h4>Type: {type}</h4>}
-      {!!origin && <h4>Origin: {origin.name}</h4>}
-      {!!location && <h4>Location: {location.name}</h4>}
+    <div onClick={() => openModal?.()} className='char-card' style={style}>
+      <h1>{id}. {name}</h1>
+      <img src={image} alt={name} />
+      <h4>Species: {species}</h4>
+      <h4>Status: {status}</h4>
+      <h4>Gender: {gender}</h4>
+      <h4>Type: {type}</h4>
+      <h4>Origin: {origin.name}</h4>
+      <h4>Location: {location.name}</h4>
+
+      {modal && <>
+        
+      </>}
     </div>
   )
 }

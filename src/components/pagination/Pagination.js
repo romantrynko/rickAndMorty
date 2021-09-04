@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export const Pagination = ({ charPerPage, totalChar, paginate }) => {
+export const Pagination = ({ count, pages }) => {
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalChar / charPerPage); i++) {
+  for (let i = 1; i <= pages; i++) {
     pageNumbers.push(i);
   };
 
@@ -13,9 +14,9 @@ export const Pagination = ({ charPerPage, totalChar, paginate }) => {
         {
           pageNumbers.map(number => (
             <li key={number} className='page-item'>
-              <a onClick={() => paginate(number)} herf='!#' className='page-link'>
+              <Link to={`/characters?page=${number}`} className='page-link'>
                 {number}
-              </a>
+              </Link>
             </li>
           ))
         }

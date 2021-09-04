@@ -1,55 +1,118 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
+import Modal from 'react-modal';
 import { Pagination } from '../pagination/Pagination';
 import { CharacterCard } from '../character-card/CharacterCard';
-
+import ReactPaginate from 'react-paginate';
 import './Characters.css';
+import { connect } from 'react-redux';
+import { getCharacters } from '../../actions';
 
-const CharactersComponent = () => {
-  const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [charPerPage, setCharPerPage] = useState(5);
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'transparent',
+    border: 'none'
+  },
+};
+
+const CharactersComponent = (props) => {
+  const { characters, getCharacters, location, info, history } = props;
+  const page = new URLSearchParams(location.search).get('page');
+  const {pages} = info || {}
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalData, setModalData] = React.useState(null);
+  const [name, setName] = React.useState('');
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-
-      await fetch(`https://rickandmortyapi.com/api/character/?page=${currentPage}`)
-        .then(response => response.json())
-        .then(data => {
-          const { results } = data;
-          setCharacters(results);
-          setLoading(false)
-        });
+    const getChar = async () => {
+      getCharacters(page, name);
     };
 
-    fetchUsers();
-  }, []);
+    getChar();
+  }, [page, name]);
 
-  const indexOfLastChar = currentPage * charPerPage;
-  const indexOfFirstChar = indexOfLastChar - charPerPage;
-  const currentChar = characters.slice(indexOfFirstChar, indexOfLastChar);
+  const handlePageClick = ({selected}) => {
+    history.push(`/characters?page=${selected + 1}`)
+  }
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  function openModal(data) {
+    setModalData(data);
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <div>
-      {
-        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary mb-3'>Characters</h1>
-      }
+      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} />
       <div className='chars'>
         {
-          currentChar.map(data => {
+          characters.map(data => {
             return (
-              <CharacterCard character={data} key={data.id} />
+              <CharacterCard style={{width: '25%'}} character={data} key={data.id} openModal={() => openModal(data)} />
             )
           })
         }
       </div>
-      <Pagination charPerPage={charPerPage} totalChar={characters.length} paginate={paginate} />
+
+     
+
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <CharacterCard style={{ backgroundColor: '#c8d7ea'}} modal character={modalData} />
+      </Modal>
+
+      <ReactPaginate
+        previousLabel={'previous'}
+        nextLabel={'next'}
+        breakLabel={'...'}
+        breakClassName={'break-me'}
+        pageCount={pages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={'pagination'}
+        activeClassName={'active'}
+      />
     </div>
   )
 }
 
-export const Characters = withRouter(CharactersComponent);
+const mapStateToProps = (store) => {
+  const {
+    characters,
+    info
+  } = store;
+
+  return {
+    characters,
+    info
+  }
+}
+
+const mapDispatchToProps = ({
+  getCharacters,
+})
+
+export const Characters = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(CharactersComponent));

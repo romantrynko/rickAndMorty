@@ -10,3 +10,8 @@
   display  : flex;
   flex-wrap: wrap;
 }
+
+.table>:not(caption)>*>* {
+  width: 175px;
+  margin: 3px;
+}

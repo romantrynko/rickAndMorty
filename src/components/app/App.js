@@ -12,24 +12,28 @@ import { Locations } from '../locations/Locations';
 import { MyWatchList } from '../my-watchlist/MyWatchList';
 import { Header } from '../header/Header';
 import { MainPage } from '../main-page/MainPage';
+import { Provider } from 'react-redux';
+import { myStore } from '../../store';
 
 function App() {
   return (
-    <BrowserRouter >
-      <Header />
-      <Switch>
-        <Route path='/' component={MainPage} exact />
+    <Provider store={myStore}>
+      <BrowserRouter >
+        <Header />
+        <Switch>
+          <Route path='/' component={MainPage} exact />
 
-        <Route path='/characters' component={Characters} exact />
+          <Route path='/characters' component={Characters} exact />
 
-        <Route path='/episodes' component={Episodes} exact />
+          <Route path='/episodes' component={Episodes} exact />
 
-        <Route path='/locations' component={Locations} exact />
+          <Route path='/locations' component={Locations} exact />
 
-        <Route path='/watchlist' component={MyWatchList} exact />
-      </Switch>
+          <Route path='/watchlist' component={MyWatchList} exact />
+        </Switch>
 
-    </BrowserRouter>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
