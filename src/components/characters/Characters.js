@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import './Characters.css';
 import { connect } from 'react-redux';
 import { getCharacters } from '../../actions/charactersAction';
+import { load } from '../../constants';
 
 const customStyles = {
   content: {
@@ -28,14 +29,14 @@ const CharactersComponent = (props) => {
   const { pages } = info || {}
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
-  const [name, setName] = React.useState('');
+  const [type, setType] = React.useState('');
 
   useEffect(() => {
     const getChar = async () => {
-      getCharacters(page, name);
+      getCharacters(page, type);
     };
     getChar();
-  }, [page, name]);
+  }, [page, type]);
 
   const handlePageClick = ({ selected }) => {
     history.push(`/characters?page=${selected + 1}`)
@@ -51,7 +52,10 @@ const CharactersComponent = (props) => {
   }
 
   return (
-    <div>
+    <div style={{ 'text-align': 'center' }}>
+      {
+        !!loading ? <h2 className={load}>Loading...</h2> : <h1 className={load}>Characters</h1>
+      }
       <ReactPaginate
         previousLabel='&laquo;'
         nextLabel='&raquo;'
@@ -64,18 +68,25 @@ const CharactersComponent = (props) => {
         containerClassName='pagination'
         activeClassName='active'
       />
-      {
-        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary'>Characters</h1>
-      }
-      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
+
+      <form className='w-25 m-3'>
+        <div class="form-group">
+          <label for="formGroupExampleInput">Name</label>
+          <input type="text" class="form-control" placeholder="Filter by name..." onChange={e => setType(e.target.value)} />
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput2">Type</label>
+          <input type="text" class="form-control" placeholder="filter by type..." onChange={e => setType(e.target.value)} />
+        </div>
+      </form>
 
       <div className='chars'>
         {
-          characters.map(character => {
+          characters ? characters.map(character => {
             return (
               <CharacterCard style={{ width: '25%' }} character={character} key={character.id} openModal={() => openModal(character)} />
             )
-          })
+          }) : <h1>Nothing found</h1>
         }
       </div>
 

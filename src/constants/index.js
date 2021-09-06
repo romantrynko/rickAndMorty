@@ -1,0 +1,1 @@
+export const load = 'text-error text-center mb-5';

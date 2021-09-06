@@ -11,16 +11,16 @@ export const EpisodeItem = (props) => {
     created
   } = props.item;
   return (
-    <div>
-      <tbody>
-        <tr>
-          <th scope="row">{id}. {name}</th>
-          <td>{air_date}</td>
-          <td>{episode}</td>
-          <td href={url}></td>
-          <td>{created}</td>
-        </tr>
-      </tbody>
-    </div>
+    <tr >
+      <th>{id}. {name}</th>
+      <td>{air_date}</td>
+      <td>{episode}</td>
+      <td >
+        <a href={url}>
+          {url}
+        </a>
+      </td>
+      <td>{created}</td>
+    </tr>
   )
 }

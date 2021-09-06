@@ -9,18 +9,18 @@ export const LocationItem = (props) => {
     url,
     created
   } = props.item;
-  
+
   return (
-    <div>
-      <tbody>
-        <tr>
-          <th scope="row">{id}. {name}</th>
-          <td>{type}</td>
-          <td>{dimension}</td>
-          <td>{url}</td>
-          <td>{created}</td>
-        </tr>
-      </tbody>
-    </div>
+    <tr>
+      <th scope="row">{id}. {name}</th>
+      <td>{type}</td>
+      <td>{dimension}</td>
+      <td>
+        <a href={url}>
+          {url}
+        </a>
+      </td>
+      <td>{created}</td>
+    </tr>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
+import { load } from '../../constants';
 
 import './Episodes.css';
 import { getEpisodes } from '../../actions/episodesAction';
@@ -19,7 +20,7 @@ const EpisodesComponent = (props) => {
     const getEp = async () => {
       getEpisodes(page, name)
     };
-    
+
     getEp();
   }, [page, name]);
 
@@ -29,6 +30,9 @@ const EpisodesComponent = (props) => {
 
   return (
     <div>
+      {
+        !!loading ? <h2 className={load}>Loading...</h2> : <h1 className={load}>Episodes</h1>
+      }
       <ReactPaginate
         previousLabel='&laquo;'
         nextLabel='&raquo;'
@@ -41,14 +45,11 @@ const EpisodesComponent = (props) => {
         containerClassName='pagination'
         activeClassName='active'
       />
-      {
-        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary'>Episodes</h1>
-      }
       <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
       {
-        <table className="table table-striped table-dark">
+        <table className="table table-striped">
           <thead>
-            <tr>
+            <tr >
               <th scope="col">#</th>
               <th scope="col">Air date:</th>
               <th scope="col">Episode: </th>
@@ -56,15 +57,14 @@ const EpisodesComponent = (props) => {
               <th scope="col">Created: </th>
             </tr>
           </thead>
+          {
+            episodes.map(item => {
+              return (
+                <EpisodeItem item={item} />
+              )
+            })
+          }
         </table>
-      }
-      {
-        episodes.map(item => {
-          return (
-              <EpisodeItem item={item} />
-          )
-        }
-        )
       }
     </div>
   )

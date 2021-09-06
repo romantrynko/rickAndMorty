@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { load } from '../../constants';
 
 import './Locations.css';
 import { getLocations } from '../../actions/locationsAction';
@@ -27,6 +28,9 @@ const LocationsComponent = (props) => {
 
   return (
     <div>
+      {
+        !!loading ? <h2 className={load}>Loading...</h2> : <h1 className={load}>Locations</h1>
+      }
       <ReactPaginate
         previousLabel='&laquo;'
         nextLabel='&raquo;'
@@ -39,32 +43,24 @@ const LocationsComponent = (props) => {
         containerClassName='pagination'
         activeClassName='active'
       />
-      {
-        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary mb-3'>Locations</h1>
-      }
       <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
-      {
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Type: </th>
-              <th scope="col">Dimension: </th>
-              <th scope="col">URL: </th>
-              <th scope="col">Created: </th>
-            </tr>
-          </thead>
-        </table>
-      }
-      {
-        locations.map(item => {
-          return (
-            <table className="table">
+
+      <table className="table">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Type: </th>
+          <th scope="col">Dimension: </th>
+          <th scope="col">URL: </th>
+          <th scope="col">Created: </th>
+        </tr>
+        {
+          locations.map(item => {
+            return (
               <LocationItem item={item} />
-            </table>
-          )
-        })
-      }
+            )
+          })
+        }
+      </table>
     </div>
   )
 };
