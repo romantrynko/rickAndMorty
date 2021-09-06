@@ -8,6 +8,14 @@
   text-align: center;
 }
 
+.center-form {
+  display        : flex;
+  flex-direction : row;
+  align-items    : center;
+  justify-content: center;
+  text-align     : center;
+}
+
 .color {
   background-color: rgb(121, 195, 255);
 }

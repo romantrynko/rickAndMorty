@@ -59,30 +59,16 @@ const CharactersComponent = (props) => {
         {
           !!loading ? <h1 className={load}>Loading...</h1> : <h1 className={load}>Characters</h1>
         }
-        <ReactPaginate
-          previousLabel='&laquo;'
-          nextLabel='&raquo;'
-          breakLabel='...'
-          breakClassName='break-me'
-          pageCount={pages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName='pagination'
-          activeClassName='active'
-        />
+        
 
-        <form className='w-25 m-4'>
-          <div class="form-group">
-            <label>Filter by species</label>
+        <form className='m-4 center-form'>
+          <div class="form-group m-4">
             <input type="text" class="form-control" placeholder="Enter species name" onChange={e => setSpecies(e.target.value)} />
           </div>
-          <div class="form-group">
-            <label>Filter by status</label>
+          <div class="form-group m-4">
             <input type="text" class="form-control" placeholder="Enter status" onChange={e => setStatus(e.target.value)} />
           </div>
-          <div class="form-group">
-            <label>Filter by gender</label>
+          <div class="form-group m-4">
             <input type="text" class="form-control" placeholder="Type gender" onChange={e => setGender(e.target.value)} />
           </div>
           <button type="reset" class="btn btn-secondary m-1">Reset</button>
@@ -100,6 +86,19 @@ const CharactersComponent = (props) => {
         }
       </div>
 
+      <ReactPaginate
+        previousLabel='&laquo;'
+        nextLabel='&raquo;'
+        breakLabel='...'
+        breakClassName='break-me'
+        pageCount={pages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName='pagination'
+        activeClassName='active'
+      />
+      
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
