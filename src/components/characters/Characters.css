@@ -52,3 +52,7 @@ ul.pagination li a.active {
   justify-content: space-between;
   margin-top     : 10px;
 }
+
+.modal {
+  width: 50%;
+}

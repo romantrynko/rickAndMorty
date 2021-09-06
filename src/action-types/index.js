@@ -1,1 +1,2 @@
 export const LOAD_CHARACTERS = 'LOAD_CHARACTERS';
+export const LOAD_EPISODES = 'LOAD_EPISODES';

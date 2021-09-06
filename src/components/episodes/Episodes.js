@@ -2,28 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 
 import './Episodes.css';
+import { getEpisodes } from '../../actions/episodesAction';
+import ReactPaginate from 'react-paginate';
+import { connect } from 'react-redux';
 
-const EpisodesComponent = () => {
-  const [episodes, setEpisodes] = useState([]);
+const EpisodesComponent = (props) => {
+  const { episodes, getEpisodes, location, info, history } = props;
+
+  const page = new URLSearchParams(location.search).get('page');
+  const { pages } = info || {};
+  const [name, setName] = React.useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getEpisodes = async () => {
+    const getEp = async () => {
       setLoading(true);
-      await fetch("https://rickandmortyapi.com/api/episode")
-        .then(response => response.json())
-        .then(data => {
-          const { results } = data;
-          setEpisodes(results);
-          setLoading(false);
-        });
+      getEpisodes(page, name)
+      setLoading(false);
     };
+    
+    getEp();
+  }, [page, name]);
 
-    getEpisodes();
-  }, []);
+  const handlePageClick = ({ selected }) => {
+    history.push(`/episodes?page=${selected + 1}`)
+  }
 
   return (
     <div>
+      <ReactPaginate
+        previousLabel='&laquo;'
+        nextLabel='&raquo;'
+        breakLabel='...'
+        breakClassName='break-me'
+        pageCount={pages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName='pagination'
+        activeClassName='active'
+      />
+      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
+
       {
         !!loading ? <h2>Loading...</h2> : <h1 className='text-primary'>Episodes</h1>
       }
@@ -71,4 +91,25 @@ const EpisodesComponent = () => {
   )
 };
 
-export const Episodes = withRouter(EpisodesComponent);
+const mapStateToProps = (store) => {
+  const {
+    episodeReducer: {
+      episodes,
+      info
+    }
+  } = store;
+
+  return {
+    episodes,
+    info
+  }
+};
+
+const mapDispatchToProps = ({
+  getEpisodes
+})
+
+export const Episodes = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(EpisodesComponent));

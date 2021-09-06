@@ -6,18 +6,18 @@ import './Header.css';
 export const Header = () => {
   return (
     <div className="nav">
-      <div >
+      <h3 className='nav-link'>
         <Link to='/characters?page=1' className='link'>Characters</Link>
-      </div>
-      <div>
+      </h3>
+      <h3>
         <Link to='/episodes' className='link'>Episodes</Link>
-      </div>
-      <div>
+      </h3>
+      <h3>
         <Link to='/locations' className='link'>Locations</Link>
-      </div>
-      <div>
+      </h3>
+      <h3>
         <Link to='/watchlist' className='link'>Watchlist</Link>
-      </div>
+      </h3>
     </div>
   )
 }

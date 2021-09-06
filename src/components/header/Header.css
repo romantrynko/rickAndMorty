@@ -1,11 +1,13 @@
 .nav {
   display        : flex;
   flex-direction : row;
-  justify-content: space-around
+  justify-content: space-around;
+  height: 100px;
+  align-content: center;
 }
 
 .link {
-  color          : rgb(37, 95, 170);
+  color          : rgb(102, 88, 119);
   text-decoration: none;
   text-transform : uppercase;
   font-weight    : bold

@@ -1,12 +1,12 @@
 import { LOAD_CHARACTERS } from '../action-types';
 
-export const getCharactersAction = (data) => ({
+const getCharactersAction = (data) => ({
   type: LOAD_CHARACTERS,
   payload: {
     results: data.results,
     info: data.info
   }
-})
+});
 
 export const getCharacters = (page, name) => {
   return (dispatch) => {
@@ -16,9 +16,7 @@ export const getCharacters = (page, name) => {
 
     if (name) {
       params.set('name', name);
-    }
-
-    // if (species) {}
+    };
 
     return fetch(`https://rickandmortyapi.com/api/character?${params.toString()}`)
       .then(response => response.json())
@@ -26,5 +24,4 @@ export const getCharacters = (page, name) => {
         dispatch(getCharactersAction(data))
       })
   }
-};
-
+}

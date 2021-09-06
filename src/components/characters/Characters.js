@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import Modal from 'react-modal';
-import { Pagination } from '../pagination/Pagination';
 import { CharacterCard } from '../character-card/CharacterCard';
 import ReactPaginate from 'react-paginate';
 import './Characters.css';
 import { connect } from 'react-redux';
-import { getCharacters } from '../../actions';
+import { getCharacters } from '../../actions/charactersAction';
 
 const customStyles = {
   content: {
@@ -17,15 +16,17 @@ const customStyles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: 'transparent',
-    border: 'none'
+    border: 'none',
+    width: '50%'
   },
 };
 
 const CharactersComponent = (props) => {
   const { characters, getCharacters, location, info, history } = props;
+
   const page = new URLSearchParams(location.search).get('page');
-  const {pages} = info || {}
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const { pages } = info || {}
+  const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
   const [name, setName] = React.useState('');
 
@@ -37,60 +38,66 @@ const CharactersComponent = (props) => {
     getChar();
   }, [page, name]);
 
-  const handlePageClick = ({selected}) => {
+  const handlePageClick = ({ selected }) => {
     history.push(`/characters?page=${selected + 1}`)
   }
 
   function openModal(data) {
     setModalData(data);
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = '#f00';
+    setModalIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setModalIsOpen(false);
   }
 
   return (
     <div>
-      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} />
+      <ReactPaginate
+        previousLabel='&laquo;'
+        nextLabel='&raquo;'
+        breakLabel='...'
+        breakClassName='break-me'
+        pageCount={pages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName='pagination'
+        activeClassName='active'
+      />
+
+      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
+
       <div className='chars'>
         {
-          characters.map(data => {
+          characters.map(character => {
             return (
-              <CharacterCard style={{width: '25%'}} character={data} key={data.id} openModal={() => openModal(data)} />
+              <CharacterCard style={{ width: '25%' }} character={character} key={character.id} openModal={() => openModal(character)} />
             )
           })
         }
       </div>
-
-     
 
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
       >
-        <CharacterCard style={{ backgroundColor: '#c8d7ea'}} modal character={modalData} />
+        <CharacterCard style={{ backgroundColor: '#c8d7ea' }} modal character={modalData} />
       </Modal>
 
       <ReactPaginate
-        previousLabel={'previous'}
-        nextLabel={'next'}
-        breakLabel={'...'}
-        breakClassName={'break-me'}
+        previousLabel='&laquo;'
+        nextLabel='&raquo;'
+        breakLabel='...'
+        breakClassName='break-me'
         pageCount={pages}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}
-        containerClassName={'pagination'}
-        activeClassName={'active'}
+        containerClassName='pagination'
+        activeClassName='active'
       />
     </div>
   )
@@ -98,8 +105,10 @@ const CharactersComponent = (props) => {
 
 const mapStateToProps = (store) => {
   const {
-    characters,
-    info
+    characterReducer: {
+      characters,
+      info
+    }
   } = store;
 
   return {
