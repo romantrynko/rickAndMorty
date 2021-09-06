@@ -29,9 +29,9 @@ const EpisodesComponent = (props) => {
   }
 
   return (
-    <div>
+    <div >
       {
-        !!loading ? <h2 className={load}>Loading...</h2> : <h1 className={load}>Episodes</h1>
+        !!loading ? <h1 className={load}>Loading...</h1> : <h1 className={load}>Episodes</h1>
       }
       <ReactPaginate
         previousLabel='&laquo;'
@@ -45,24 +45,33 @@ const EpisodesComponent = (props) => {
         containerClassName='pagination'
         activeClassName='active'
       />
-      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
+
       {
-        <table className="table table-striped">
+        <table className="table m-4">
           <thead>
-            <tr >
-              <th scope="col">#</th>
-              <th scope="col">Air date:</th>
-              <th scope="col">Episode: </th>
-              <th scope="col">URL</th>
-              <th scope="col">Created: </th>
+            <tr>
+              <th>
+                <form>
+                  <div class="form-group">
+                    <label>Episode name</label>
+                    <input type="text" class="form-control" placeholder="Enter name" onChange={e => setName(e.target.value)} />
+                  </div>
+                </form>
+              </th>
+              <th >Air date</th>
+              <th >Episode</th>
+              <th >URL</th>
+              <th >Created</th>
+
             </tr>
           </thead>
+
           {
-            episodes.map(item => {
+            episodes ? episodes.map(item => {
               return (
                 <EpisodeItem item={item} />
               )
-            })
+            }) : <h3>Nothing found</h3>
           }
         </table>
       }

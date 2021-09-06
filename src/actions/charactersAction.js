@@ -16,7 +16,7 @@ const loadingFalse = () => ({
   type: LOADING_FALSE
 });
 
-export const getCharacters = (page, name) => {
+export const getCharacters = (page, species, status, gender) => {
   return (dispatch) => {
     dispatch(loadingTrue());
 
@@ -24,9 +24,17 @@ export const getCharacters = (page, name) => {
 
     params.set('page', page);
 
-    if (name) {
-      params.set('name', name);
+    if (species) {
+      params.set('species', species);
     };
+
+    if (status) {
+      params.set('status', status)
+    };
+
+    if (gender) {
+      params.set('gender', gender)
+    }
 
     return fetch(`https://rickandmortyapi.com/api/character?${params.toString()}`)
       .then(response => response.json())

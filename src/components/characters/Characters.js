@@ -29,14 +29,16 @@ const CharactersComponent = (props) => {
   const { pages } = info || {}
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [modalData, setModalData] = React.useState(null);
-  const [type, setType] = React.useState('');
+  const [species, setSpecies] = React.useState('');
+  const [status, setStatus] = React.useState('');
+  const [gender, setGender] = React.useState('');
 
   useEffect(() => {
     const getChar = async () => {
-      getCharacters(page, type);
+      getCharacters(page, species, status, gender);
     };
     getChar();
-  }, [page, type]);
+  }, [page, species, status, gender]);
 
   const handlePageClick = ({ selected }) => {
     history.push(`/characters?page=${selected + 1}`)
@@ -52,41 +54,49 @@ const CharactersComponent = (props) => {
   }
 
   return (
-    <div style={{ 'text-align': 'center' }}>
-      {
-        !!loading ? <h2 className={load}>Loading...</h2> : <h1 className={load}>Characters</h1>
-      }
-      <ReactPaginate
-        previousLabel='&laquo;'
-        nextLabel='&raquo;'
-        breakLabel='...'
-        breakClassName='break-me'
-        pageCount={pages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName='pagination'
-        activeClassName='active'
-      />
+    <div className='center'>
+      <div>
+        {
+          !!loading ? <h1 className={load}>Loading...</h1> : <h1 className={load}>Characters</h1>
+        }
+        <ReactPaginate
+          previousLabel='&laquo;'
+          nextLabel='&raquo;'
+          breakLabel='...'
+          breakClassName='break-me'
+          pageCount={pages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName='pagination'
+          activeClassName='active'
+        />
 
-      <form className='w-25 m-3'>
-        <div class="form-group">
-          <label for="formGroupExampleInput">Name</label>
-          <input type="text" class="form-control" placeholder="Filter by name..." onChange={e => setType(e.target.value)} />
-        </div>
-        <div class="form-group">
-          <label for="formGroupExampleInput2">Type</label>
-          <input type="text" class="form-control" placeholder="filter by type..." onChange={e => setType(e.target.value)} />
-        </div>
-      </form>
+        <form className='w-25 m-4'>
+          <div class="form-group">
+            <label>Filter by species</label>
+            <input type="text" class="form-control" placeholder="Enter species name" onChange={e => setSpecies(e.target.value)} />
+          </div>
+          <div class="form-group">
+            <label>Filter by status</label>
+            <input type="text" class="form-control" placeholder="Enter status" onChange={e => setStatus(e.target.value)} />
+          </div>
+          <div class="form-group">
+            <label>Filter by gender</label>
+            <input type="text" class="form-control" placeholder="Type gender" onChange={e => setGender(e.target.value)} />
+          </div>
+          <button type="reset" class="btn btn-secondary m-1">Reset</button>
+        </form>
+      </div>
 
-      <div className='chars'>
+
+      <div className='chars center'>
         {
           characters ? characters.map(character => {
             return (
               <CharacterCard style={{ width: '25%' }} character={character} key={character.id} openModal={() => openModal(character)} />
             )
-          }) : <h1>Nothing found</h1>
+          }) : <h3>Nothing found</h3>
         }
       </div>
 

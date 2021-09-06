@@ -16,7 +16,7 @@ const loadingFalse = () => ({
   type: LOADING_FALSE
 });
 
-export const getLocations = (page, name) => {
+export const getLocations = (page, name, type, dimension) => {
   return (dispatch) => {
     dispatch(loadingTrue());
 
@@ -26,6 +26,14 @@ export const getLocations = (page, name) => {
 
     if (name) {
       params.set('name', name);
+    };
+
+    if (type) {
+      params.set('type', type);
+    };
+
+    if (dimension) {
+      params.set('dimension', dimension);
     };
 
     return fetch(`https://rickandmortyapi.com/api/location?${params.toString()}`)

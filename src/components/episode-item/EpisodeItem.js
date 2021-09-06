@@ -11,7 +11,7 @@ export const EpisodeItem = (props) => {
     created
   } = props.item;
   return (
-    <tr >
+    <tr>
       <th>{id}. {name}</th>
       <td>{air_date}</td>
       <td>{episode}</td>

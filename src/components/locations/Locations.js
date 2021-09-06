@@ -14,13 +14,15 @@ const LocationsComponent = (props) => {
   const page = new URLSearchParams(location.search).get('page');
   const { pages } = info || {};
   const [name, setName] = React.useState('');
+  const [type, setType] = React.useState('');
+  const [dimension, setDimension] = React.useState('');
 
   useEffect(() => {
     const getLoc = async () => {
-      getLocations(page, name);
+      getLocations(page, name, type, dimension);
     };
     getLoc();
-  }, [page, name]);
+  }, [page, name, type, dimension]);
 
   const handlePageClick = ({ selected }) => {
     history.push(`/location?page=${selected + 1}`)
@@ -29,7 +31,7 @@ const LocationsComponent = (props) => {
   return (
     <div>
       {
-        !!loading ? <h2 className={load}>Loading...</h2> : <h1 className={load}>Locations</h1>
+        !!loading ? <h1 className={load}>Loading...</h1> : <h1 className={load}>Locations</h1>
       }
       <ReactPaginate
         previousLabel='&laquo;'
@@ -43,22 +45,42 @@ const LocationsComponent = (props) => {
         containerClassName='pagination'
         activeClassName='active'
       />
-      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
 
-      <table className="table">
+      <table className="table m-4">
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Type: </th>
-          <th scope="col">Dimension: </th>
-          <th scope="col">URL: </th>
-          <th scope="col">Created: </th>
+          <th>
+            <form>
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" placeholder="Enter name" onChange={e => setName(e.target.value)} />
+              </div>
+            </form>
+          </th>
+          <th>
+            <form>
+              <div class="form-group">
+                <label>Type</label>
+                <input type="text" class="form-control" placeholder="Enter type" onChange={e => setType(e.target.value)} />
+              </div>
+            </form>
+          </th>
+          <th>
+            <form>
+              <div class="form-group">
+                <label>Dimension</label>
+                <input type="text" class="form-control" placeholder="Type dimension" onChange={e => setDimension(e.target.value)} />
+              </div>
+            </form>
+          </th>
+          <th scope="col">URL</th>
+          <th scope="col">Created</th>
         </tr>
         {
-          locations.map(item => {
+          locations ? locations.map(item => {
             return (
               <LocationItem item={item} />
             )
-          })
+          }) : <h3>Nothing found</h3>
         }
       </table>
     </div>

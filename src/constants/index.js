@@ -1,1 +1,1 @@
-export const load = 'text-error text-center mb-5';
+export const load = 'text-primary text-center m-5';
