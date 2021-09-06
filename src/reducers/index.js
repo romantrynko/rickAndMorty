@@ -34,7 +34,6 @@ const episodeReducer = (store = episodeStore, action) => {
         info: action.payload.info
       }
     }
-
     default: return store;
   }
 }

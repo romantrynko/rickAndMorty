@@ -18,7 +18,7 @@ export const getEpisodes = (page, name) => {
       params.set('name', name);
     };
 
-    return fetch("https://rickandmortyapi.com/api/episode")
+    return fetch(`https://rickandmortyapi.com/api/episode?${params.toString()}`)
       .then(response => response.json())
       .then(data => {
         dispatch(getEpisodesAction(data))

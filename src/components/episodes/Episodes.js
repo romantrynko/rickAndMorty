@@ -5,11 +5,13 @@ import './Episodes.css';
 import { getEpisodes } from '../../actions/episodesAction';
 import ReactPaginate from 'react-paginate';
 import { connect } from 'react-redux';
+import { EpisodeItem } from '../episode-item/EpisodeItem';
 
 const EpisodesComponent = (props) => {
   const { episodes, getEpisodes, location, info, history } = props;
 
   const page = new URLSearchParams(location.search).get('page');
+  console.log(page);
   const { pages } = info || {};
   const [name, setName] = React.useState('');
   const [loading, setLoading] = useState(false);
@@ -20,12 +22,12 @@ const EpisodesComponent = (props) => {
       getEpisodes(page, name)
       setLoading(false);
     };
-    
+
     getEp();
   }, [page, name]);
 
   const handlePageClick = ({ selected }) => {
-    history.push(`/episodes?page=${selected + 1}`)
+    history.push(`/episode?page=${selected + 1}`)
   }
 
   return (
@@ -62,30 +64,11 @@ const EpisodesComponent = (props) => {
       }
       {
         episodes.map(item => {
-          const {
-            id,
-            name,
-            air_date,
-            episode,
-            characters,
-            url,
-            created
-          } = item;
-
           return (
-            <table className="table ">
-              <tbody>
-                <tr>
-                  {!!id && <th scope="row">{id}. {name}</th>}
-                  {!!air_date && <td>{air_date}</td>}
-                  {!!episode && <td>{episode}</td>}
-                  {!!url && <td href={url}></td>}
-                  {!!created && <td>{created}</td>}
-                </tr>
-              </tbody>
-            </table>
+              <EpisodeItem item={item} />
           )
-        })
+        }
+        )
       }
     </div>
   )

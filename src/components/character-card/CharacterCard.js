@@ -22,9 +22,9 @@ export const CharacterCard = ({ character: {
         !modal && <div>
           <h2>{id}. {name}</h2>
           <img src={image} alt={name} />
-          <h4>Species: {species}</h4>
-          <h4>Status: {status}</h4>
-          <h4>Gender: {gender}</h4>
+          <h5>Species: {species}</h5>
+          <h5>Status: {status}</h5>
+          <h5>Gender: {gender}</h5>
         </div>
       }
       {
@@ -36,10 +36,11 @@ export const CharacterCard = ({ character: {
           <h5>Gender: {gender}</h5>
           <h5>Type: {type}</h5>
           <h5>Origin: {origin.name}</h5>
-          <h5>Episode: <a href={episode}>{episode}</a></h5>
-          <h5>Url: <a href={url}>{url}</a></h5>
+          <span>Episode: <a href={episode}>{episode}</a></span>
           <br />
-          <h5>Created: {created}</h5>
+          <span>Url: <a href={url}>{url}</a></span>
+          <br />
+          <span>Created: {created}</span>
         </div>
       }
     </div>

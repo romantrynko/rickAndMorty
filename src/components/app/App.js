@@ -25,7 +25,7 @@ function App() {
 
           <Route path='/characters' component={Characters} exact />
 
-          <Route path='/episodes' component={Episodes} exact />
+          <Route path='/episode' component={Episodes} exact />
 
           <Route path='/locations' component={Locations} exact />
 

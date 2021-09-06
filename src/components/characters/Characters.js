@@ -85,19 +85,6 @@ const CharactersComponent = (props) => {
       >
         <CharacterCard style={{ backgroundColor: '#c8d7ea' }} modal character={modalData} />
       </Modal>
-
-      <ReactPaginate
-        previousLabel='&laquo;'
-        nextLabel='&raquo;'
-        breakLabel='...'
-        breakClassName='break-me'
-        pageCount={pages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName='pagination'
-        activeClassName='active'
-      />
     </div>
   )
 }
