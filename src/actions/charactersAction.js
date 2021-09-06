@@ -1,4 +1,4 @@
-import { LOAD_CHARACTERS } from '../action-types';
+import { LOAD_CHARACTERS, LOADING_TRUE, LOADING_FALSE } from '../action-types';
 
 const getCharactersAction = (data) => ({
   type: LOAD_CHARACTERS,
@@ -8,8 +8,18 @@ const getCharactersAction = (data) => ({
   }
 });
 
+export const loadingTrue = () => ({
+  type: LOADING_TRUE
+});
+
+export const loadingFalse = () => ({
+  type: LOADING_FALSE
+});
+
 export const getCharacters = (page, name) => {
   return (dispatch) => {
+    dispatch(loadingTrue());
+
     const params = new URLSearchParams();
 
     params.set('page', page);
@@ -21,7 +31,8 @@ export const getCharacters = (page, name) => {
     return fetch(`https://rickandmortyapi.com/api/character?${params.toString()}`)
       .then(response => response.json())
       .then(data => {
-        dispatch(getCharactersAction(data))
+        dispatch(getCharactersAction(data));
+        dispatch(loadingFalse())
       })
   }
 }

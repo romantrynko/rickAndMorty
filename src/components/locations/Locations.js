@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import './Locations.css';
+import { getLocations } from '../../actions/locationsAction';
 
-const LocationsComponent = () => {
-  const [locations, setLocations] = useState([]);
+const LocationsComponent = (props) => {
+  const { locations, getLocations, location, info, history } = props;
+
+  const page = new URLSearchParams(location.search).get('page');
+  const { pages } = info || {};
+  const [name, setName] = React.useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getLocations = async () => {
+    const getLoc = async () => {
       setLoading(true);
-      await fetch("https://rickandmortyapi.com/api/location")
-        .then(response => response.json())
-        .then(data => {
-          const { results } = data;
-          setLocations(results);
-          setLoading(false);
-        });
+      getLocations(page, name);
     };
-
-    getLocations();
+    setLoading(false);
+    getLoc();
   }, [])
 
   return (
@@ -70,4 +70,25 @@ const LocationsComponent = () => {
   )
 };
 
-export const Locations = withRouter(LocationsComponent);
+const mapStateToProps = (store) => {
+  const {
+    locationReducer: {
+      locations,
+      info
+    }
+  } = store;
+
+  return {
+    locations,
+    info
+  }
+};
+
+const mapDispatchToProps = ({
+  getLocations
+})
+
+export const Locations = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(LocationsComponent));

@@ -1,2 +1,6 @@
 export const LOAD_CHARACTERS = 'LOAD_CHARACTERS';
 export const LOAD_EPISODES = 'LOAD_EPISODES';
+export const LOAD_LOCATIONS = 'LOAD_LOCATIONS';
+
+export const LOADING_TRUE = 'LOADING_TRUE';
+export const LOADING_FALSE = 'LOADING_FALSE';

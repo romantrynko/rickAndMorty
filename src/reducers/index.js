@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOAD_CHARACTERS, LOAD_EPISODES } from '../action-types';
+import { LOAD_CHARACTERS, LOAD_EPISODES, LOAD_LOCATIONS, LOADING_TRUE, LOADING_FALSE } from '../action-types';
 
 const characterStore = {
   characters: [],
@@ -16,13 +16,28 @@ const characterReducer = (store = characterStore, action) => {
       }
     }
 
+    case LOADING_TRUE: {
+      return {
+        ...store,
+        loading: true
+      }
+    }
+
+    case LOADING_FALSE: {
+      return {
+        ...store,
+        loading: false
+      }
+    }
+
     default: return store;
   }
 }
 
 const episodeStore = {
   episodes: [],
-  info: null
+  info: null,
+  loading: false
 }
 
 const episodeReducer = (store = episodeStore, action) => {
@@ -34,6 +49,39 @@ const episodeReducer = (store = episodeStore, action) => {
         info: action.payload.info
       }
     }
+
+    case LOADING_TRUE: {
+      return {
+        ...store,
+        loading: true
+      }
+    }
+
+    case LOADING_FALSE: {
+      return {
+        ...store,
+        loading: false
+      }
+    }
+
+    default: return store;
+  }
+}
+
+const locationStore = {
+  locations: [],
+  info: null
+}
+
+const locationReducer = (store = locationStore, action) => {
+  switch (action.type) {
+    case LOAD_LOCATIONS: {
+      return {
+        ...store,
+        locations: action.payload.results,
+        info: action.payload.info
+      }
+    }
     default: return store;
   }
 }
@@ -41,6 +89,7 @@ const episodeReducer = (store = episodeStore, action) => {
 export const rootReducer = () => {
   return combineReducers({
     characterReducer,
-    episodeReducer
+    episodeReducer,
+    locationReducer
   })
 }

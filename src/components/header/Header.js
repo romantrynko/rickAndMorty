@@ -10,10 +10,10 @@ export const Header = () => {
         <Link to='/characters?page=1' className='link'>Characters</Link>
       </h3>
       <h3>
-        <Link to='/episodes?page=1' className='link'>Episodes</Link>
+        <Link to='/episode?page=1' className='link'>Episodes</Link>
       </h3>
       <h3>
-        <Link to='/locations' className='link'>Locations</Link>
+        <Link to='/location?page=1' className='link'>Locations</Link>
       </h3>
       <h3>
         <Link to='/watchlist' className='link'>Watchlist</Link>

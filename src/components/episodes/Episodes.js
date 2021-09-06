@@ -8,21 +8,18 @@ import { connect } from 'react-redux';
 import { EpisodeItem } from '../episode-item/EpisodeItem';
 
 const EpisodesComponent = (props) => {
-  const { episodes, getEpisodes, location, info, history } = props;
+  const { episodes, getEpisodes, location, info, history, loading } = props;
 
   const page = new URLSearchParams(location.search).get('page');
   console.log(page);
   const { pages } = info || {};
   const [name, setName] = React.useState('');
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getEp = async () => {
-      setLoading(true);
       getEpisodes(page, name)
-      setLoading(false);
     };
-
+    
     getEp();
   }, [page, name]);
 
@@ -78,13 +75,15 @@ const mapStateToProps = (store) => {
   const {
     episodeReducer: {
       episodes,
-      info
+      info,
+      loading
     }
   } = store;
 
   return {
     episodes,
-    info
+    info,
+    loading
   }
 };
 

@@ -22,7 +22,7 @@ const customStyles = {
 };
 
 const CharactersComponent = (props) => {
-  const { characters, getCharacters, location, info, history } = props;
+  const { characters, getCharacters, location, info, history, loading } = props;
 
   const page = new URLSearchParams(location.search).get('page');
   const { pages } = info || {}
@@ -65,7 +65,9 @@ const CharactersComponent = (props) => {
         containerClassName='pagination'
         activeClassName='active'
       />
-
+      {
+        !!loading ? <h2>Loading...</h2> : <h1 className='text-primary'>Characters</h1>
+      }
       <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
 
       <div className='chars'>
@@ -93,13 +95,15 @@ const mapStateToProps = (store) => {
   const {
     characterReducer: {
       characters,
-      info
+      info,
+      loading
     }
   } = store;
 
   return {
     characters,
-    info
+    info,
+    loading
   }
 }
 
