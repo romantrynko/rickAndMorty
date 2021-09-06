@@ -80,7 +80,6 @@ const CharactersComponent = (props) => {
 
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
       >
