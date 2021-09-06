@@ -41,11 +41,10 @@ const EpisodesComponent = (props) => {
         containerClassName='pagination'
         activeClassName='active'
       />
-      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
-
       {
         !!loading ? <h2>Loading...</h2> : <h1 className='text-primary'>Episodes</h1>
       }
+      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
       {
         <table className="table table-striped table-dark">
           <thead>

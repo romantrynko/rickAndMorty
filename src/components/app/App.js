@@ -27,7 +27,7 @@ function App() {
 
           <Route path='/episode' component={Episodes} exact />
 
-          <Route path='/locations' component={Locations} exact />
+          <Route path='/location' component={Locations} exact />
 
           <Route path='/watchlist' component={MyWatchList} exact />
         </Switch>

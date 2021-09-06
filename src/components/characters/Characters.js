@@ -34,7 +34,6 @@ const CharactersComponent = (props) => {
     const getChar = async () => {
       getCharacters(page, name);
     };
-
     getChar();
   }, [page, name]);
 

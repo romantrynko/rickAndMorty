@@ -8,11 +8,11 @@ const getEpisodesAction = (data) => ({
   }
 });
 
-export const loadingTrue = () => ({
+const loadingTrue = () => ({
   type: LOADING_TRUE
 });
 
-export const loadingFalse = () => ({
+const loadingFalse = () => ({
   type: LOADING_FALSE
 });
 

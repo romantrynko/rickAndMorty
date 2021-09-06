@@ -70,7 +70,8 @@ const episodeReducer = (store = episodeStore, action) => {
 
 const locationStore = {
   locations: [],
-  info: null
+  info: null,
+  loading: false
 }
 
 const locationReducer = (store = locationStore, action) => {
@@ -80,6 +81,20 @@ const locationReducer = (store = locationStore, action) => {
         ...store,
         locations: action.payload.results,
         info: action.payload.info
+      }
+    }
+
+    case LOADING_TRUE: {
+      return {
+        ...store,
+        loading: true
+      }
+    }
+
+    case LOADING_FALSE: {
+      return {
+        ...store,
+        loading: false
       }
     }
     default: return store;

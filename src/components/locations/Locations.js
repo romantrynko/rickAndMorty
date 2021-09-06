@@ -4,29 +4,45 @@ import { withRouter } from 'react-router';
 
 import './Locations.css';
 import { getLocations } from '../../actions/locationsAction';
+import ReactPaginate from 'react-paginate';
+import { LocationItem } from '../location-item/LocationItem';
 
 const LocationsComponent = (props) => {
-  const { locations, getLocations, location, info, history } = props;
+  const { locations, getLocations, location, info, history, loading } = props;
 
   const page = new URLSearchParams(location.search).get('page');
   const { pages } = info || {};
   const [name, setName] = React.useState('');
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getLoc = async () => {
-      setLoading(true);
       getLocations(page, name);
     };
-    setLoading(false);
     getLoc();
-  }, [])
+  }, [page, name]);
+
+  const handlePageClick = ({ selected }) => {
+    history.push(`/location?page=${selected + 1}`)
+  }
 
   return (
-    <div className='locations-list'>
+    <div>
+      <ReactPaginate
+        previousLabel='&laquo;'
+        nextLabel='&raquo;'
+        breakLabel='...'
+        breakClassName='break-me'
+        pageCount={pages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName='pagination'
+        activeClassName='active'
+      />
       {
         !!loading ? <h2>Loading...</h2> : <h1 className='text-primary mb-3'>Locations</h1>
       }
+      <input placeholder="filter by name..." onChange={e => setName(e.target.value)} className='form form-input' />
       {
         <table className="table">
           <thead>
@@ -42,26 +58,9 @@ const LocationsComponent = (props) => {
       }
       {
         locations.map(item => {
-          const {
-            id,
-            name,
-            type,
-            dimension,
-            url,
-            created
-          } = item;
-
           return (
             <table className="table">
-              <tbody>
-                <tr>
-                  {!!id && <th scope="row">{id}. {name}</th>}
-                  {!!type && <td>{type}</td>}
-                  {!!dimension && <td>{dimension}</td>}
-                  {!!url && <td>{url}</td>}
-                  {!!created && <td>{created}</td>}
-                </tr>
-              </tbody>
+              <LocationItem item={item} />
             </table>
           )
         })
@@ -74,13 +73,15 @@ const mapStateToProps = (store) => {
   const {
     locationReducer: {
       locations,
-      info
+      info,
+      loading
     }
   } = store;
 
   return {
     locations,
-    info
+    info,
+    loading
   }
 };
 
