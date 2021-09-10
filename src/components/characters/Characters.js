@@ -62,16 +62,16 @@ const CharactersComponent = (props) => {
 
 
         <form className='m-4 center-form'>
-          <div class="form-group m-4">
-            <input type="text" class="form-control" placeholder="Enter species name" onChange={e => setSpecies(e.target.value)} />
+          <div className="form-group m-4">
+            <input type="text" className="form-control" placeholder="Enter species name" onChange={e => setSpecies(e.target.value)} />
           </div>
-          <div class="form-group m-4">
-            <input type="text" class="form-control" placeholder="Enter status" onChange={e => setStatus(e.target.value)} />
+          <div className="form-group m-4">
+            <input type="text" className="form-control" placeholder="Enter status" onChange={e => setStatus(e.target.value)} />
           </div>
-          <div class="form-group m-4">
-            <input type="text" class="form-control" placeholder="Type gender" onChange={e => setGender(e.target.value)} />
+          <div className="form-group m-4">
+            <input type="text" className="form-control" placeholder="Type gender" onChange={e => setGender(e.target.value)} />
           </div>
-          <button type="reset" class="btn btn-secondary m-1">Reset</button>
+          <button type="reset" className="btn btn-secondary m-1">Reset</button>
         </form>
       </div>
 
