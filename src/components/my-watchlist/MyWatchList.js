@@ -7,7 +7,7 @@ export default function MyWatchList() {
   // const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    const local = async () => {0
+    const local = async () => {
       const stringList = JSON.parse(list);
       localStorage.setItem('list', stringList || JSON.stringify([]));
     }
@@ -38,13 +38,22 @@ export default function MyWatchList() {
     setList(newList);
   };
 
+  const deleteItem = async (id) => {
+    const episodes = await localStorage.getItem('list');
+    const parsedEpisodes = JSON.parse(episodes);
+    const filteredEpisodes = parsedEpisodes.filter(episode => episode.id !== id);
+    const stringFilteredEpisodes = JSON.stringify(filteredEpisodes);
+    await localStorage.setItem('list', stringFilteredEpisodes);
+    setList(filteredEpisodes);
+  };
+
   return (
     <div>
       <AddItemForm onAddItem={addItem} />
       {
         list ? list.map((item, key) => {
           return (
-            <MyWatchItem item={item} key={key} />
+            <MyWatchItem item={item} key={key} onDeleteItem={deleteItem}/>
           )
         }) : <h2>Nothing to show</h2>
       }
