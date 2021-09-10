@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function MyWatchItem() {
+export default function MyWatchItem({ item }) {
+ 
+
   return (
     <div>
-      MyWatchItem
+      {item.name}
     </div>
   )
 }

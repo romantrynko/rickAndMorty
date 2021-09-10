@@ -53,6 +53,13 @@ const CharactersComponent = (props) => {
     setModalIsOpen(false);
   }
 
+  function onReset() {
+    const getChar = async () => {
+      getCharacters(page, species, status, gender);
+    };
+    getChar()
+  }
+
   return (
     <div className='center'>
       <div>
@@ -71,7 +78,7 @@ const CharactersComponent = (props) => {
           <div className="form-group m-4">
             <input type="text" className="form-control" placeholder="Type gender" onChange={e => setGender(e.target.value)} />
           </div>
-          <button type="reset" className="btn btn-secondary m-1">Reset</button>
+          <button type="reset" className="btn btn-secondary m-1" onClick={onReset}>Reset</button>
         </form>
       </div>
 
