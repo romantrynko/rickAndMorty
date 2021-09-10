@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { load } from '../../constants';
@@ -22,7 +22,7 @@ const LocationsComponent = (props) => {
       getLocations(page, name, type, dimension);
     };
     getLoc();
-  }, [page, name, type, dimension]);
+  }, [page, name, type, dimension, getLocations]);
 
   const handlePageClick = ({ selected }) => {
     history.push(`/location?page=${selected + 1}`)
@@ -33,18 +33,20 @@ const LocationsComponent = (props) => {
       {
         !!loading ? <h1 className={load}>Loading...</h1> : <h1 className={load}>Locations</h1>
       }
-      <ReactPaginate
-        previousLabel='&laquo;'
-        nextLabel='&raquo;'
-        breakLabel='...'
-        breakClassName='break-me'
-        pageCount={pages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName='pagination'
-        activeClassName='active'
-      />
+      {
+        !!locations && <ReactPaginate
+          previousLabel='&laquo;'
+          nextLabel='&raquo;'
+          breakLabel='...'
+          breakClassName='break-me'
+          pageCount={pages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName='pagination'
+          activeClassName='active'
+        />
+      }
 
       <table className="table m-4">
         <tr>

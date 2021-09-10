@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import Modal from 'react-modal';
 import { CharacterCard } from '../character-card/CharacterCard';
@@ -38,7 +38,7 @@ const CharactersComponent = (props) => {
       getCharacters(page, species, status, gender);
     };
     getChar();
-  }, [page, species, status, gender]);
+  }, [page, species, status, gender, getCharacters]);
 
   const handlePageClick = ({ selected }) => {
     history.push(`/characters?page=${selected + 1}`)
@@ -59,7 +59,7 @@ const CharactersComponent = (props) => {
         {
           !!loading ? <h1 className={load}>Loading...</h1> : <h1 className={load}>Characters</h1>
         }
-        
+
 
         <form className='m-4 center-form'>
           <div class="form-group m-4">
@@ -86,19 +86,21 @@ const CharactersComponent = (props) => {
         }
       </div>
 
-      <ReactPaginate
-        previousLabel='&laquo;'
-        nextLabel='&raquo;'
-        breakLabel='...'
-        breakClassName='break-me'
-        pageCount={pages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName='pagination'
-        activeClassName='active'
-      />
-      
+      {
+        !!characters && <ReactPaginate
+          previousLabel='&laquo;'
+          nextLabel='&raquo;'
+          breakLabel='...'
+          breakClassName='break-me'
+          pageCount={pages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName='pagination'
+          activeClassName='active'
+        />
+      }
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

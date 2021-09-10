@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { load } from '../../constants';
 
@@ -22,7 +22,7 @@ const EpisodesComponent = (props) => {
     };
 
     getEp();
-  }, [page, name]);
+  }, [page, name, getEpisodes]);
 
   const handlePageClick = ({ selected }) => {
     history.push(`/episode?page=${selected + 1}`)
@@ -33,18 +33,20 @@ const EpisodesComponent = (props) => {
       {
         !!loading ? <h1 className={load}>Loading...</h1> : <h1 className={load}>Episodes</h1>
       }
-      <ReactPaginate
-        previousLabel='&laquo;'
-        nextLabel='&raquo;'
-        breakLabel='...'
-        breakClassName='break-me'
-        pageCount={pages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName='pagination'
-        activeClassName='active'
-      />
+      {
+        !!episodes && <ReactPaginate
+          previousLabel='&laquo;'
+          nextLabel='&raquo;'
+          breakLabel='...'
+          breakClassName='break-me'
+          pageCount={pages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName='pagination'
+          activeClassName='active'
+        />
+      }
 
       {
         <table className="table m-4">

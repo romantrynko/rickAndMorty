@@ -6,7 +6,6 @@ export const EpisodeItem = (props) => {
     name,
     air_date,
     episode,
-    characters,
     url,
     created
   } = props.item;

@@ -2,9 +2,7 @@ import './App.css';
 import {
   BrowserRouter,
   Switch,
-  Route,
-  Link,
-  Redirect
+  Route
 } from 'react-router-dom';
 import { Characters } from '../characters/Characters';
 import { Episodes } from '../episodes/Episodes';
