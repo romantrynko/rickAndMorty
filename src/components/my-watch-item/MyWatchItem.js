@@ -1,11 +1,10 @@
 import React from 'react'
 
 export default function MyWatchItem({ item }) {
- 
 
   return (
-    <div>
-      {item.name}
+    <div className='card card-body'>
+      {item.id}. {item.name}
     </div>
   )
 }

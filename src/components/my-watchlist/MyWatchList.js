@@ -4,16 +4,29 @@ import MyWatchItem from './../my-watch-item/MyWatchItem';
 
 export default function MyWatchList() {
   const [list, setList] = useState([]);
-  
+  // const [isDone, setIsDone] = useState(false);
+
   useEffect(() => {
-    const local = async () => {
+    const local = async () => {0
       const stringList = JSON.parse(list);
-      localStorage.setItem('list', stringList);
-      setList(stringList);
+      localStorage.setItem('list', stringList || JSON.stringify([]));
     }
     local();
-  }, [list])
-  
+  }, [list]);
+
+  useEffect(() => {
+    const func = async () => {
+      const data = localStorage.getItem('list');
+      const parsedData = JSON.parse(data);
+      setList(parsedData);
+    };
+    func();
+  }, []);
+
+  // const isDoneToggle = (id, status) => {
+
+  // }
+
   const addItem = async (item) => {
     const getListToAdd = await localStorage.getItem('list');
     const parsedGetListToAdd = JSON.parse(getListToAdd);
@@ -24,16 +37,16 @@ export default function MyWatchList() {
     await localStorage.setItem('list', stringNewList);
     setList(newList);
   };
-  
+
   return (
     <div>
       <AddItemForm onAddItem={addItem} />
       {
-        !!list.length && list.map((item, key) => {
+        list ? list.map((item, key) => {
           return (
             <MyWatchItem item={item} key={key} />
           )
-        })
+        }) : <h2>Nothing to show</h2>
       }
     </div>
   )
