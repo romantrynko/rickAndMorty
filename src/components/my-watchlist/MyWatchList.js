@@ -1,29 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AddItemForm from '../my-watch-item/AddItemForm';
 import MyWatchItem from './../my-watch-item/MyWatchItem';
 
 export default function MyWatchList() {
   const [list, setList] = useState([]);
-
-  const addItem = (item) => {
-    const newList = [...list, item]
+  
+  useEffect(() => {
+    const local = async () => {
+      const stringList = JSON.parse(list);
+      localStorage.setItem('list', stringList);
+      setList(stringList);
+    }
+    local();
+  }, [list])
+  
+  const addItem = async (item) => {
+    const getListToAdd = await localStorage.getItem('list');
+    const parsedGetListToAdd = JSON.parse(getListToAdd);
+    const newList = [
+      ...parsedGetListToAdd, item
+    ];
+    const stringNewList = JSON.stringify(newList);
+    await localStorage.setItem('list', stringNewList);
     setList(newList);
-    let stringList = JSON.stringify(newList);
-    localStorage.setItem('list', stringList);
   };
-
-  const getList = () => {
-    const listFromStorage = localStorage.getItem('list');
-    return JSON.parse(listFromStorage);
-  }
-
-  const parsedList = getList();
-
+  
   return (
     <div>
       <AddItemForm onAddItem={addItem} />
       {
-        !!parsedList.length && parsedList.map((item, key) => {
+        !!list.length && list.map((item, key) => {
           return (
             <MyWatchItem item={item} key={key} />
           )
