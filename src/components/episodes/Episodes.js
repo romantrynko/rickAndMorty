@@ -12,7 +12,7 @@ const EpisodesComponent = (props) => {
   const { episodes, getEpisodes, location, info, history, loading } = props;
 
   const page = new URLSearchParams(location.search).get('page');
-  console.log(page);
+  
   const { pages } = info || {};
   const [name, setName] = React.useState('');
 
@@ -54,9 +54,9 @@ const EpisodesComponent = (props) => {
             <tr>
               <th>
                 <form>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label>Episode name</label>
-                    <input type="text" class="form-control" placeholder="Enter name" onChange={e => setName(e.target.value)} />
+                    <input type="text" className="form-control" placeholder="Enter name" onChange={e => setName(e.target.value)} />
                   </div>
                 </form>
               </th>
@@ -71,7 +71,7 @@ const EpisodesComponent = (props) => {
           {
             episodes ? episodes.map(item => {
               return (
-                <EpisodeItem item={item} />
+                <EpisodeItem item={item} key={item.id}/>
               )
             }) : <h3>Nothing found</h3>
           }

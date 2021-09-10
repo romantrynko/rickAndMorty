@@ -6,12 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from 'react-modal';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+let rootEl = document.createElement('div');
+rootEl.setAttribute('id', 'root');
+document.body.appendChild(rootEl);
+
+
+ReactDOM.render(<App />, rootEl);
 
 Modal.setAppElement('#root');
 

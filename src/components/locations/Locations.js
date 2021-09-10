@@ -47,44 +47,45 @@ const LocationsComponent = (props) => {
           activeClassName='active'
         />
       }
-
-      <table className="table m-4">
-        <tr>
-          <th>
-            <form>
-              <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" placeholder="Enter name" onChange={e => setName(e.target.value)} />
-              </div>
-            </form>
-          </th>
-          <th>
-            <form>
-              <div class="form-group">
-                <label>Type</label>
-                <input type="text" class="form-control" placeholder="Enter type" onChange={e => setType(e.target.value)} />
-              </div>
-            </form>
-          </th>
-          <th>
-            <form>
-              <div class="form-group">
-                <label>Dimension</label>
-                <input type="text" class="form-control" placeholder="Type dimension" onChange={e => setDimension(e.target.value)} />
-              </div>
-            </form>
-          </th>
-          <th scope="col">URL</th>
-          <th scope="col">Created</th>
-        </tr>
-        {
-          locations ? locations.map(item => {
-            return (
-              <LocationItem item={item} />
-            )
-          }) : <h3>Nothing found</h3>
-        }
-      </table>
+      <tbody>
+        <table className="table m-4">
+          <tr>
+            <th>
+              <form>
+                <div className="form-group">
+                  <label>Name</label>
+                  <input type="text" className="form-control" placeholder="Enter name" onChange={e => setName(e.target.value)} />
+                </div>
+              </form>
+            </th>
+            <th>
+              <form>
+                <div className="form-group">
+                  <label>Type</label>
+                  <input type="text" className="form-control" placeholder="Enter type" onChange={e => setType(e.target.value)} />
+                </div>
+              </form>
+            </th>
+            <th>
+              <form>
+                <div className="form-group">
+                  <label>Dimension</label>
+                  <input type="text" className="form-control" placeholder="Type dimension" onChange={e => setDimension(e.target.value)} />
+                </div>
+              </form>
+            </th>
+            <th scope="col">URL</th>
+            <th scope="col">Created</th>
+          </tr>
+          {
+            locations ? locations.map(item => {
+              return (
+                <LocationItem item={item} key={item.id}/>
+              )
+            }) : <h3>Nothing found</h3>
+          }
+        </table>
+      </tbody>
     </div>
   )
 };
