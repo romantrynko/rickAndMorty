@@ -4,7 +4,7 @@ import MyWatchItem from './../my-watch-item/MyWatchItem';
 
 export default function MyWatchList() {
   const [list, setList] = useState([]);
-  // const [isDone, setIsDone] = useState(false);
+  
 
   useEffect(() => {
     const local = async () => {
@@ -18,22 +18,19 @@ export default function MyWatchList() {
     const func = async () => {
       const data = localStorage.getItem('list');
       const parsedData = JSON.parse(data);
-      setList(parsedData);
+      setList(parsedData );
     };
     func();
   }, []);
 
-  // const isDoneToggle = (id, status) => {
-
-  // }
-
   const addItem = async (item) => {
-    const getListToAdd = await localStorage.getItem('list');
+    const getListToAdd = await localStorage.getItem('list') ;
     const parsedGetListToAdd = JSON.parse(getListToAdd);
     const newList = [
       ...parsedGetListToAdd, item
     ];
     const stringNewList = JSON.stringify(newList);
+
     await localStorage.setItem('list', stringNewList);
     setList(newList);
   };
@@ -43,17 +40,31 @@ export default function MyWatchList() {
     const parsedEpisodes = JSON.parse(episodes);
     const filteredEpisodes = parsedEpisodes.filter(episode => episode.id !== id);
     const stringFilteredEpisodes = JSON.stringify(filteredEpisodes);
+
     await localStorage.setItem('list', stringFilteredEpisodes);
     setList(filteredEpisodes);
+  };
+
+  const changeStatus = async (status, id) => {
+    const episodes = await localStorage.getItem('list');
+    const parsedEpisodes = JSON.parse(episodes);
+    const foundEpisode = parsedEpisodes.find(episode => episode.id === id);
+    foundEpisode.status = status;
+    
+    const filteredEpisodes = JSON.stringify(parsedEpisodes);
+
+    await localStorage.setItem('list', filteredEpisodes);
+    setList(parsedEpisodes);
+    
   };
 
   return (
     <div>
       <AddItemForm onAddItem={addItem} />
       {
-        list ? list.map((item, key) => {
+        list && list.length ? list.map((item, index) => {
           return (
-            <MyWatchItem item={item} key={key} onDeleteItem={deleteItem}/>
+            <MyWatchItem item={item} key={index} index={index} onDeleteItem={deleteItem} onChangeStatus={changeStatus} status={item.status}/>
           )
         }) : <h2>Nothing to show</h2>
       }

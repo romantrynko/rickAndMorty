@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function MyWatchItem({ item, onDeleteItem }) {
-  
+export default function MyWatchItem({ item, onDeleteItem, status, onChangeStatus, index }) {
+
   return (
     <div className='card card-body'>
-      {item.id}. {item.name}
-      <button className='btn btn-danger m-2' onClick={() => onDeleteItem(item.id)}>Delete</button>
+      <div className='d-flex '>
+        {item.id}. {item.name}
+      </div>
+      <div className='d-flex'>
+        <button className='btn btn-secondary m-2 w-25' onClick={() => onDeleteItem(item.id)}>Remove</button>
+      </div>
+      <div className='d-flex'>
+        <input type="checkbox" onChange={e => { onChangeStatus(e.target.checked, item.id) }} checked={status} />
+      </div>
     </div>
   )
 }
